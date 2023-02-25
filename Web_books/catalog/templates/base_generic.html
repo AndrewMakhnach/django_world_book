@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block title %}<title>World of books</title>{% endblock %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.nmin.js"></script>
+
+  <!-- Adding static CSS-file -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  {% block head %}
+      <img src="{% static 'images/logotip.jpg' %}"
+      style="width:100px; height:100px;"  align="absmiddle">
+      <font size=11, color="brown">Site "World of books"</font>
+  {% endblock %}
+</head>
+<body>
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-sm-2">
+      {% block sidebar %}
+      <ul class="sidebar-nav">
+        <li><a href="{% url 'index' %}">Main page</a></li>
+        <li><a href="{% url 'books' %}">All books</a></li>
+        <li><a href="{% url 'authors' %}">All authors</a></li>
+        <li><a href="{% url 'authors_add' %}">Edit authors</a></li>
+        <li><a href="{% url 'book_create' %}">Add a book</a></li>
+          {% if user.is_authenticated %}
+          <li>User: {{ user.get_username }}</li>
+          <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+          <li><a href="{% url 'my-borrowed' %}">My oders</a></li>
+          {% else %}
+          <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+          {% endif %}
+      </ul>
+       {% endblock %}
+      </div>
+      <div class="col-sm-10">
+        {% block content %}{% endblock %}
+        {% block pagination %}
+        {% if is_paginated %}
+          <div class="pagination">
+              <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{{request.path}}?page={{page_obj.previous_page_number}}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{page_obj.number}} from
+                    {{page_obj.paginator.num_pages}}.
+                </span>
+                  {% if page_obj.has_next %}
+                    <a href="{{request.path}}?page={{page_obj.next_page_number}}">next</a>
+                  {% endif %}
+              </span>
+          </div>
+         {% endif %}
+        {% endblock %}
+        {% block footer %}
+          {% block copyright %}
+        <p>Copyright GMBH "people and books", 2023. All rights reserved</p>
+          {% endblock %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Main page</h1>
+    <p>Welcome in <em>World of books!</em> This is very simple site, written on Django</p>
+<h2>Dinamic content</h2>/9/
+
+    <p>Date base contain next quantity of records:</p>
+    <ul>
+        <li><strong>Quantity of books:</strong>{{num_books}}</li>
+        <li><strong>Quantity of instances:</strong>{{num_instances}}</li>
+        <li><strong>Quantity of reserved instances</strong>{{ num_instances_available}}</li>
+        <li><strong>Quantity of authors of books:</strong>{{ num_authors }}</li>
+    </ul>
+    <p>Quantity of visits this page - {{num_visits}}</p>
+   {% endblock %}

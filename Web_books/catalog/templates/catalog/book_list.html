@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>list of books in DB</h1>
+  {% if book_list %}
+  <ul>
+    {% for book in book_list %}
+    <li>
+      <a href="{{ book.get_absolute_url }}">
+               {{ book.title }}</a>
+               ({{ book.genre }})
+      <a href="/book/update/{{book.id}}">Change</a>,
+      <a href="/book/delete/{{book.id}}">Delete</a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no books in the DB</p>
+  {% endif %}
+{% endblock %}
